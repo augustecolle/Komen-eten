@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # this script uses passlib to hash the passwords
 # to install it:
