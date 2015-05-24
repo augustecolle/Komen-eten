@@ -1,5 +1,7 @@
+//http://documentup.com/wout/svg.js
+//
+//
 //-----------------Inkscape figure raw data for drawing the chair-------------------
-
 
 var originalWidth = 164.98347
 var originalHeight = 182.59712
@@ -29,23 +31,41 @@ function addChair(canvas){
 
 function addTable(canvas){
     var nested = canvas.nested()
-    return nested.circle(80)
+    return nested.circle(300).fill('none').stroke({color: '#000000', opacity: 1, width: 10})
     }      
 
 function fillChair(chair, color){
     //fill seat of chair, chair is an object containing the references to all objects in the SVG chair drawing, color is a hexadecimal string format ex. '#FF0000'
     chair.get('zitje').style('fill:'+color+';stroke:#000000;stroke-width:13;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0')
-}
+    }
+    
+function getDimOfDOM(DOMid){
+    //returns the dimensions of the DOM element with id DOMid
+    var width = document.getElementById(DOMid).offsetWidth;
+    var height = document.getElementById(DOMid).offsetHeight;
+    return {width:width, height:height} 
+    }
+
+function centerOnCanvas(canvas_container, SVG){
+    //canvas_container is a string representing the id of the DOM element containing the canvas where the SVG is drawn on
+    console.log(SVG.attr('height'))
+    SVG.center(getDimOfDOM(canvas_container).width/2, getDimOfDOM(canvas_container).height/2)
+    }
+
+
+
 //test code
 var canvas1 = newCanvas('canvas_container')
 var chair1 = addChair(canvas1)
 chair1.canvas.transform({
-  rotation: 45
+  rotation: 45,
+  x: 50,
+  y: 50
 })
 
 var chair2 = addChair(canvas1)
 fillChair(chair2.objects, '#FF0000')
 var table1 = addTable(canvas1)
-//chair1.get('zitje').style('fill:#FFFF00;stroke:#000000;stroke-width:13;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0')
+centerOnCanvas('canvas_container', table1)
 
 
