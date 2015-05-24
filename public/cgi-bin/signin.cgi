@@ -32,6 +32,7 @@ print("<title>This is the title</title>")
 print("Your username was {:}<br>".format(form['username'].value))
 print("Your password was {:}<br>".format(form['password'].value))
 print(bodystring)
+print(form)
 print("</head>")
 print("</html>")
 
