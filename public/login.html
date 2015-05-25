@@ -5,11 +5,18 @@
 </head>
 <body>
 
+<!-- sign in form -->
 <form action="cgi-bin/signin.cgi" method="POST">
-Username: <input type="text" name="username"></br>
-Password: <input type="text" name="password"></br>
+Username: <input type="text" name="username"><br>
+Password: <input type="text" name="password"><br>
 <input type="submit" value="signin" name="signin">
-<input type="submit" value="signup" name="signup">
 </form>
+
+<!-- sign up form -->
+<form action="cgi-bin/signup.cgi" method="POST">
+Username: <input type="text" name="username"><br>
+Password: <input type="text" name="password"><br>
+Email   : <input type="text" name="email"   ><br>
+<input type="submit" value="signup" name="signup">
 </body>
 </html>

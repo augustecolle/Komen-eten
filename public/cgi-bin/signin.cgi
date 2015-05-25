@@ -6,32 +6,39 @@
 # pip install passlib
 #
 #
-import cgi,cgitb
-from passlib.hash import pbkdf2_sha256
-import json,os
-cgitb.enable()
+import imp # to find our user_database module
+mod = imp.find_module("user_database",["."])
+user_database = imp.load_module("user_database",*mod)
 
-PRIVATE_DIR="../../private" #private dir relative to this script
-PRIVATE_USER_FILE=PRIVATE_DIR+"/users.txt"
-bodystring=""
-try:
-	userfile = open(PRIVATE_USER_FILE,"r")
-	users=json.load(userfile)
-except IOError:
-	print("Error, no user database found, cannot check credentials")
-	bodystring = "Error, no user database found, cannot check credentials"
-	
-print("Content-Type: text/html\n\n")
+import cgi,cgitb; cgitb.enable()
+from user_database import UserDatabase
+
+db = UserDatabase()
+
+bodystring=""	
 
 
 form = cgi.FieldStorage()
+username=form['username'].value
+password=form['password'].value
 
+
+if (db.user_exists(username) and db.check_password(username,password) ):
+	bodystring = "Welcome {:s}, you succesfully logged in ".format(username)		
+else:
+	bodystring = "Invalid username/password<br>"
+	bodystring+= " user exists ? "+str(db.user_exists(username))+"<br>"
+	bodystring+= " check passwd? "+str(db.check_password(username,password))+"<br><br>"
+
+print("Content-Type: text/html\n\n")
 print("<html>")
 print("<head>")
 print("<title>This is the title</title>")
 print("Your username was {:}<br>".format(form['username'].value))
 print("Your password was {:}<br>".format(form['password'].value))
 print(bodystring)
+import os
+print("Path is {:s}".format(os.getcwd()))
 print(form)
 print("</head>")
 print("</html>")
