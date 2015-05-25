@@ -24,6 +24,5 @@ class UserDatabase:
 	
 	# return True if password is correct, False if not
 	def check_password(self,username,password):
-		hash = pbkdf2_sha256.encrypt(password,rounds=self.HASH_ROUNDS,salt_size=self.HASH_SALT_SIZE)
 		return(pbkdf2_sha256.verify(password,self.db.get(tinydb.where('username')==username)['password']))
 		
