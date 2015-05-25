@@ -15,10 +15,14 @@ function scale(svg, factor){
     svg.scale(factor, factor)
     }
 
-function newCanvas(container){
+function newCanvas(container, procHeight, procWidth){
     //container is a string representing the DOM element where the SVG will be drawn
+    //procHeight is a string representing the procentual height of the DOM element which will be used to draw the canvas, defaults to 100%
+    //same for procWidth
     //returns a SVG object 
-    return SVG(container)
+    procHeight = typeof procHeight !== 'undefined' ? procHeight : '100%';
+    procWidth = typeof procWidth !== 'undefined' ? procWidth : '100%';
+    return SVG(container).size(procHeight, procWidth)
     }
 
 function addChair(canvas){
@@ -46,16 +50,26 @@ function getDimOfDOM(DOMid){
     return {width:width, height:height} 
     }
 
-function centerOnCanvas(canvas_container, SVG){
-    //canvas_container is a string representing the id of the DOM element containing the canvas where the SVG is drawn on
-    console.log(SVG.attr('height'))
-    SVG.center(getDimOfDOM(canvas_container).width/2, getDimOfDOM(canvas_container).height/2)
+function getDimOfCanvas(canvas){
+    //returns the dimensions of the canvas
+    var dim = getDimOfDOM(canvas.parent.id)
+    var hperc = parseFloat(canvas.attr('height'))/100.0
+    var wperc = parseFloat(canvas.attr('width'))/100.0
+    var width = dim.width*wperc
+    var height = dim.height*hperc
+    return {width:width, height:height} 
+    }
+
+function centerOnCanvas(canvas, SVG){
+    //canvas is the canvas where the SVG is drawn on
+    SVG.center(getDimOfCanvas(canvas).width/2, getDimOfCanvas(canvas).height/2)
     }
 
 
 
+
 //test code
-var canvas1 = newCanvas('canvas_container')
+var canvas1 = newCanvas('canvas_container', '100%','100%')
 var chair1 = addChair(canvas1)
 chair1.canvas.transform({
   rotation: 45,
@@ -63,9 +77,9 @@ chair1.canvas.transform({
   y: 50
 })
 
-var chair2 = addChair(canvas1)
-fillChair(chair2.objects, '#FF0000')
+//var chair2 = addChair(canvas1)
+//fillChair(chair2.objects, '#FF0000')
 var table1 = addTable(canvas1)
-centerOnCanvas('canvas_container', table1)
-
+centerOnCanvas(canvas1, table1)
+getDimOfCanvas(canvas1)
 

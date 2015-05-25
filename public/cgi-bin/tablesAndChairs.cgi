@@ -2,6 +2,19 @@
 
 import cgi,cgitb
 
+class Table:
+    def __init__(self, numOfChairs):
+        '''initiates a table. numOfChairs is an int and defines how much chairs should be around the table'''
+        try:
+            x = numOfChairs + 1
+            self.numOfChairs = numOfChairs
+        except TypeError:
+            print('<script> alert("%r is not a valid number for number of chairs") </script>' %numOfChairs)
+
+
+
+
+
 print("Content-Type: text/html\n\n")
 print("<html>")
 print("<head>")
@@ -18,4 +31,4 @@ print('<script src="../table_and_chairs/svg.parser.js" type="text/javascript"></
 print('<script src="../table_and_chairs/svg.import.js" type="text/javascript"></script>')
 print('<script src="../table_and_chairs/tryOutAuguste.js" type="text/javascript"></script>')
  
-
+table = Table(5)
