@@ -25,17 +25,17 @@ function newCanvas(container, procHeight, procWidth){
     return SVG(container).size(procHeight, procWidth)
     }
 
-function addChair(canvas){
+function addChair(oricanvas){
     //canvas is a SVG object, draws a chair on the canvas
     //returns the chair as an SVG object
     //returns an object containing the references to all objects in the SVG chair drawing 
-    var nested = canvas.nested()
+    var nested = oricanvas.nested().size(originalHeight, originalWidth)
     return {canvas:nested, objects:nested.svg(rawSVGchair)}
     }
 
 function addTable(canvas){
     var nested = canvas.nested()
-    return nested.circle(300).fill('none').stroke({color: '#000000', opacity: 1, width: 10})
+    return nested.circle(500).fill('none').stroke({color: '#000000', opacity: 1, width: 10})
     }      
 
 function fillChair(chair, color){
@@ -69,17 +69,17 @@ function centerOnCanvas(canvas, SVG){
 
 
 //test code
-var canvas1 = newCanvas('canvas_container', '100%','100%')
-var chair1 = addChair(canvas1)
-chair1.canvas.transform({
-  rotation: 45,
-  x: 50,
-  y: 50
-})
+//var canvas1 = newCanvas('canvas_container', '100%','100%')
+//var chair1 = addChair(canvas1)
+//chair1.canvas.transform({
+//  rotation: 45,
+//  x: 50,
+//  y: 50
+//})
 
 //var chair2 = addChair(canvas1)
 //fillChair(chair2.objects, '#FF0000')
-var table1 = addTable(canvas1)
-centerOnCanvas(canvas1, table1)
-getDimOfCanvas(canvas1)
+//var table1 = addTable(canvas1)
+//centerOnCanvas(canvas1, table1)
+//getDimOfCanvas(canvas1)
 
