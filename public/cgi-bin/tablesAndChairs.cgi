@@ -12,6 +12,7 @@ class Table:
         try:
             x = numOfChairs + 1
             self.numOfChairs = numOfChairs
+            self.tableNumber = Table.tableNumber
             Table.tableNumber += 1
             print("<script> console.log("+str(self.tableNumber)+") </script>")
         except TypeError:
@@ -19,18 +20,35 @@ class Table:
 
     def drawOnCanvas(self, canvas):
         '''draw table and chairs on canvas'''
-        print('<script> var table'+str(Table.tableNumber)+' = addTable('+canvas+') </script>')
-        print('<script> centerOnCanvas('+canvas+', table'+str(Table.tableNumber)+') </script>')
+        print('<script> var table'+str(self.tableNumber)+' = addTable('+canvas+') </script>')
+        print('<script> centerOnCanvas('+canvas+', table'+str(self.tableNumber)+') </script>')
         angle = math.pi*2/(self.numOfChairs)
         r = 300
-        print("<script> var xcoord = table1.attr('cx') </script>")
-        print("<script> var ycoord = table1.attr('cy') </script>")
-        print("<script> console.log(xcoord) </script>")
+        print("<script> var xcoord = table"+str(self.tableNumber)+".attr('cx') </script>")
+        print("<script> var ycoord = table"+str(self.tableNumber)+".attr('cy') </script>")
+        print("<script> var radius = table"+str(self.tableNumber)+".attr('rx') </script>")
+        print("<script> console.log(radius) </script>")
         print("<script> var dimOfDOM = getDimOfDOM('canvas_container') </script>")
-        for chairs in range(self.numOfChairs):
-            print("<script> console.log("+str(chairs)+") </script>")
-            print("<script> var chair"+str(chairs)+" = addChair("+canvas+") </script>")
-            print("<script> chair"+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", x:dimOfDOM.width/2-(250+30+originalWidth), y:dimOfDOM.height/2-originalHeight/2, cx : xcoord, cy : ycoord}) </script>")
+
+        if (self.numOfChairs < 16):
+            for chairs in range(self.numOfChairs):
+                print("<script> console.log("+str(self.tableNumber)+str(chairs)+") </script>")
+                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord) </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) </script>")
+        else:
+            scaleFactor = 15.0/self.numOfChairs
+            for chairs in range(self.numOfChairs):
+                print("<script> table"+str(self.tableNumber)+".attr('rx',radius+160*(1-"+str(scaleFactor)+"))  </script>")
+                print("<script> table"+str(self.tableNumber)+".attr('ry',radius+160*(1-"+str(scaleFactor)+"))  </script>")
+                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.scale("+str(scaleFactor)+", "+str(scaleFactor)+") </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord + originalHeight/2*(1-"+str(scaleFactor)+")) </script>")
+                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) </script>")
+
+
 
 print("Content-Type: text/html\n\n")
 print("<html>")
@@ -49,5 +67,5 @@ print('<script src="../table_and_chairs/svg.import.js" type="text/javascript"></
 print('<script src="../table_and_chairs/tryOutAuguste.js" type="text/javascript"></script>')
  
 print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </script>")
-table1 = Table(15)
+table1 = Table(30)
 table1.drawOnCanvas('canvas1')
