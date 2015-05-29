@@ -1,3 +1,4 @@
 
-*.swp
-*~
+*.pyc #ignore compiled python modules
+*.swp #ignore vim swp files
+*~    #ignore temp backup files

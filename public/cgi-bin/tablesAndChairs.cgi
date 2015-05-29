@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+import imp # to find our user_database module
+mod = imp.find_module("session_manager",["."])
+session_manager = imp.load_module("session_manager",*mod)
 
 import cgi,cgitb
 import math
@@ -48,24 +51,27 @@ class Table:
                 print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord + originalHeight/2*(1-"+str(scaleFactor)+")) </script>")
                 print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) </script>")
 
+# only allow the execution of this function when user is authenticated
+@session_manager.sessionAuth
+def main():
+    print("Content-Type: text/html\n\n")
+    print("<html>")
+    print("<head>")
+    print("<title>This is the title</title>")
+    print('<style type="text/css"> #canvas_container { width: 1500; height: 1000; border: 1px solid #aaa; } </style>')
+    print("</head>")
+    print('<body>')
+    print('<div id="canvas_container"></div>')
+    print('</body>')
+    print("</html>")
 
+    print('<script src="../table_and_chairs/svg.js" type="text/javascript"></script>')
+    print('<script src="../table_and_chairs/svg.parser.js" type="text/javascript"></script>')
+    print('<script src="../table_and_chairs/svg.import.js" type="text/javascript"></script>')
+    print('<script src="../table_and_chairs/tryOutAuguste.js" type="text/javascript"></script>')
+     
+    print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </script>")
+    table1 = Table(30)
+    table1.drawOnCanvas('canvas1')
 
-print("Content-Type: text/html\n\n")
-print("<html>")
-print("<head>")
-print("<title>This is the title</title>")
-print('<style type="text/css"> #canvas_container { width: 1500; height: 1000; border: 1px solid #aaa; } </style>')
-print("</head>")
-print('<body>')
-print('<div id="canvas_container"></div>')
-print('</body>')
-print("</html>")
-
-print('<script src="../table_and_chairs/svg.js" type="text/javascript"></script>')
-print('<script src="../table_and_chairs/svg.parser.js" type="text/javascript"></script>')
-print('<script src="../table_and_chairs/svg.import.js" type="text/javascript"></script>')
-print('<script src="../table_and_chairs/tryOutAuguste.js" type="text/javascript"></script>')
- 
-print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </script>")
-table1 = Table(30)
-table1.drawOnCanvas('canvas1')
+main()

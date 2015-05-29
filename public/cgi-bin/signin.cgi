@@ -9,9 +9,13 @@
 import imp # to find our user_database module
 mod = imp.find_module("user_database",["."])
 user_database = imp.load_module("user_database",*mod)
+mod = imp.find_module("session_manager",["."])
+session_manager = imp.load_module("session_manager",*mod)
+
 
 import cgi,cgitb; cgitb.enable()
 from user_database import UserDatabase
+import Cookie,uuid
 
 db = UserDatabase()
 
@@ -22,14 +26,20 @@ form = cgi.FieldStorage()
 username=form['username'].value
 password=form['password'].value
 
+cookie = Cookie.SimpleCookie()
 
 if (db.user_exists(username) and db.check_password(username,password) ):
+	sessionM = session_manager.sessionManager()
+	session_id = sessionM.new_session(username)
+	cookie["username"]   = username
+	cookie["session_id"] = session_id
 	bodystring = "Welcome {:s}, you succesfully logged in ".format(username)		
 else:
 	bodystring = "Invalid username/password<br>"
 	bodystring+= " user exists ? "+str(db.user_exists(username))+"<br>"
 	bodystring+= " check passwd? "+str(db.check_password(username,password))+"<br><br>"
 
+print(cookie) # important that this comes before Content-Type:....
 print("Content-Type: text/html\n\n")
 print("<html>")
 print("<head>")
