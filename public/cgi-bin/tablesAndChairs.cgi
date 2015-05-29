@@ -91,8 +91,8 @@ print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </scr
 #table2 = Table(12)
 #table2.drawOnCanvas('canvas1')
 tables = []
-for x in range(4):
-    tables.append(Table((5+2)))
+for x in range(17):
+    tables.append(Table(8))
     tables[x].drawOnCanvas('canvas1')
 
 Table.putTablesOnDiv('canvas_container')
