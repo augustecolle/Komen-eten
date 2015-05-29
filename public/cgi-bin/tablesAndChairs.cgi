@@ -55,8 +55,8 @@ class Table:
         '''static method to scale all tables and put in a div'''
         print("<script> var dimOfDiv = getDimOfDOM('"+div+"') </script>")
         nCols = int(math.ceil(math.sqrt(Table.tableNumber)))
-        nRows = int(math.floor(math.sqrt(Table.tableNumber)))
-        scaleF = 1.00/(1.2+nCols)
+        nRows = int(math.ceil(Table.tableNumber/float(nCols)))
+        scaleF = 1.00/(1.8*nCols)
         print("<script> var scale2div = dimOfDiv.width/group0.bbox().width </script>")
         #print("<script> var scale2div = Math.min(dimOfDiv.width/group0.bbox().width, dimOfDiv.height/group0.bbox().height) </script>")
         print("<script> var groupWidth = group0.bbox().width </script>")
@@ -91,8 +91,8 @@ print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </scr
 #table2 = Table(12)
 #table2.drawOnCanvas('canvas1')
 tables = []
-for x in range(12):
-    tables.append(Table((x+1)*2))
+for x in range(4):
+    tables.append(Table((5+2)))
     tables[x].drawOnCanvas('canvas1')
 
 Table.putTablesOnDiv('canvas_container')
