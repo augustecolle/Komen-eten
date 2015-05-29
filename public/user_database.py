@@ -23,6 +23,7 @@ class UserDatabase:
 		self.db.insert(user)
 	
 	# return True if password is correct, False if not
+        # make use of lazy evaluation of and
 	def check_password(self,username,password):
-		return(pbkdf2_sha256.verify(password,self.db.get(tinydb.where('username')==username)['password']))
+		return self.user_exists(username) and (pbkdf2_sha256.verify(password,self.db.get(tinydb.where('username')==username)['password']))
 		
