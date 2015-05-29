@@ -68,6 +68,13 @@ function centerOnCanvas(canvas, SVG){
     SVG.center(getDimOfCanvas(canvas).width/2, getDimOfCanvas(canvas).height/2)
     }
 
+function centerOnDiv(divId, SVG){
+    //divId is the id of the div conatining the SVG
+    console.log(getDimOfDOM(divId).width/2)
+    SVG.center(getDimOfDOM(divId).width/2, getDimOfDOM(divId).height/2)
+    }
+
+
 
 
 
