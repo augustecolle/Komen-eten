@@ -27,6 +27,7 @@
 body {
 	background-image: url("figs/table.jpg");
 	margin: 0px;
+	background-size:cover;	
 }	
 .form {
 	height: 180px;
