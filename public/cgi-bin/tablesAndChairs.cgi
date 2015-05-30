@@ -56,16 +56,15 @@ class Table:
         print("<script> var dimOfDiv = getDimOfDOM('"+div+"') </script>")
         nCols = int(math.ceil(math.sqrt(Table.tableNumber)))
         nRows = int(math.ceil(Table.tableNumber/float(nCols)))
-        scaleF = 1.00/(1.8*nCols)
+        scaleF = 1.00/(2*nCols)
         print("<script> var scale2div = dimOfDiv.width/group0.bbox().width </script>")
         #print("<script> var scale2div = Math.min(dimOfDiv.width/group0.bbox().width, dimOfDiv.height/group0.bbox().height) </script>")
         print("<script> var groupWidth = group0.bbox().width </script>")
         for row in range(nRows):
             for col in range(nCols):
-                print("<script> group"+str(row*nCols+col)+".scale(scale2div*"+str(scaleF)+",scale2div*"+str(scaleF)+") </script>")
-                print("<script> group"+str(row*nCols+col)+".cx(-group"+str(row*nCols+col)+".rbox().cx  + group"+str(row*nCols+col)+".bbox().width/2 + dimOfDiv.width/"+str(nCols*2)+"*"+str(col*2+1)+") </script>")
-                print("<script> group"+str(row*nCols+col)+".cy(-group"+str(row*nCols+col)+".rbox().cy + group"+str(row*nCols+col)+".bbox().height/2 + dimOfDiv.height/"+str(2*nRows)+"*"+str(row*2+1)+") </script>")
-               #print("<script> group"+str(row*nCols+col)+".cy(-group"+str(row*nCols+col)+".rbox().cy - group"+str(row*nCols+col)+".bbox().height/2 + dimOfDiv.height/"+str(2*nRows)+"*"+str(row*2+1)+") </script>")
+                print("<script> group"+str(row*nCols+col)+".scale(scale2div*"+str(scaleF)+",scale2div*"+str(scaleF)+") \n"
+                "group"+str(row*nCols+col)+".cx(-group"+str(row*nCols+col)+".rbox().cx  + group"+str(row*nCols+col)+".bbox().width/2 + dimOfDiv.width/"+str(nCols*2)+"*"+str(col*2+1)+") \n" 
+                " group"+str(row*nCols+col)+".cy(-group"+str(row*nCols+col)+".rbox().cy + group"+str(row*nCols+col)+".bbox().height/2 + dimOfDiv.height/"+str(2*nRows)+"*"+str(row*2+1)+") </script>")
                 print("<script> console.log(dimOfDiv.width/"+str(nCols+1)+"*"+str(col+1)+") </script>")
                 print("<script> console.log(group0.rbox().cx) </script>")
 
@@ -91,8 +90,8 @@ print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </scr
 #table2 = Table(12)
 #table2.drawOnCanvas('canvas1')
 tables = []
-for x in range(17):
-    tables.append(Table(8))
+for x in range(15):
+    tables.append(Table((x+1)))
     tables[x].drawOnCanvas('canvas1')
 
 Table.putTablesOnDiv('canvas_container')
