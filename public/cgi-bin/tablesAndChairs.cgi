@@ -24,53 +24,50 @@ class Table:
 
     def drawOnCanvas(self, canvas):
         '''draw table and chairs on canvas'''
-        print('<script> var group'+str(self.tableNumber)+' = '+canvas+'.group() </script>')
-        print('<script> var table'+str(self.tableNumber)+' = addTable('+canvas+') </script>')
-        print('<script> centerOnCanvas('+canvas+', table'+str(self.tableNumber)+') </script>')
         angle = math.pi*2/(self.numOfChairs)
-        print("<script> var xcoord = table"+str(self.tableNumber)+".attr('cx') </script>")
-        print("<script> var ycoord = table"+str(self.tableNumber)+".attr('cy') </script>")
-        print("<script> var radius = table"+str(self.tableNumber)+".attr('rx') </script>")
-        print("<script> var dimOfDOM = getDimOfDOM('canvas_container') </script>")
-        print("<script> group"+str(self.tableNumber)+".add(table"+str(self.tableNumber)+") </script>")
+        print("<script> var group"+str(self.tableNumber)+" = "+canvas+".group() \n"
+        " var table"+str(self.tableNumber)+" = addTable("+canvas+") \n"
+        " centerOnCanvas("+canvas+", table"+str(self.tableNumber)+") \n"
+        " var xcoord = table"+str(self.tableNumber)+".attr('cx') \n"
+        " var ycoord = table"+str(self.tableNumber)+".attr('cy') \n"
+        " var radius = table"+str(self.tableNumber)+".attr('rx') \n"
+        " var dimOfDOM = getDimOfDOM('canvas_container') \n"
+        " group"+str(self.tableNumber)+".add(table"+str(self.tableNumber)+") </script>")
         if (self.numOfChairs < 16):
             for chairs in range(self.numOfChairs):
-                #print("<script> console.log("+str(self.tableNumber)+str(chairs)+") </script>")
-                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord) </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) </script>")
-                print("<script> group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) </script>")
+                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord) \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) \n"
+                " group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) </script>")
         else:
             scaleFactor = 15.0/self.numOfChairs
             #scale table
-            print("<script> table"+str(self.tableNumber)+".attr('rx',radius+160*(1-"+str(scaleFactor)+"))  </script>")
-            print("<script> table"+str(self.tableNumber)+".attr('ry',radius+160*(1-"+str(scaleFactor)+"))  </script>")
+            print("<script> table"+str(self.tableNumber)+".attr('rx',radius+160*(1-"+str(scaleFactor)+"))  \n"
+            " table"+str(self.tableNumber)+".attr('ry',radius+160*(1-"+str(scaleFactor)+"))  </script>")
             for chairs in range(self.numOfChairs):
-                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.scale("+str(scaleFactor)+", "+str(scaleFactor)+") </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord + originalHeight/2*(1-"+str(scaleFactor)+")) </script>")
-                print("<script> chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) </script>")
-                print("<script> group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) </script>")
+                print("<script> var chair"+str(self.tableNumber)+str(chairs)+" = addChair("+canvas+") \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.scale("+str(scaleFactor)+", "+str(scaleFactor)+") \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord + originalHeight/2*(1-"+str(scaleFactor)+")) \n"
+                " chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) \n"
+                " group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) </script>")
 
     @staticmethod
     def putTablesOnDiv(div):
         '''static method to scale all tables and put in a div'''
-        print("<script> var dimOfDiv = getDimOfDOM('"+div+"') </script>")
         nCols = int(math.ceil(math.sqrt(Table.tableNumber)))
         nRows = int(math.ceil(Table.tableNumber/float(nCols)))
         scaleF = 1.00/(2*nCols)
-        print("<script> var scale2div = dimOfDiv.width/group0.bbox().width </script>")
-        #print("<script> var scale2div = Math.min(dimOfDiv.width/group0.bbox().width, dimOfDiv.height/group0.bbox().height) </script>")
-        print("<script> var groupWidth = group0.bbox().width </script>")
+        print("<script> var dimOfDiv = getDimOfDOM('"+div+"') \n " 
+        "var scale2div = dimOfDiv.width/group0.bbox().width \n" 
+        " var groupWidth = group0.bbox().width </script>")
         for row in range(nRows):
             for col in range(nCols):
-                print("<script> group"+str(row*nCols+col)+".scale(scale2div*"+str(scaleF)+",scale2div*"+str(scaleF)+") \n"
-                "group"+str(row*nCols+col)+".cx(-group"+str(row*nCols+col)+".rbox().cx  + group"+str(row*nCols+col)+".bbox().width/2 + dimOfDiv.width/"+str(nCols*2)+"*"+str(col*2+1)+") \n" 
-                " group"+str(row*nCols+col)+".cy(-group"+str(row*nCols+col)+".rbox().cy + group"+str(row*nCols+col)+".bbox().height/2 + dimOfDiv.height/"+str(2*nRows)+"*"+str(row*2+1)+") </script>")
-                print("<script> console.log(dimOfDiv.width/"+str(nCols+1)+"*"+str(col+1)+") </script>")
-                print("<script> console.log(group0.rbox().cx) </script>")
+                if ((nCols*row)+(col) < Table.tableNumber):
+                    print("<script> group"+str(row*nCols+col)+".scale(scale2div*"+str(scaleF)+",scale2div*"+str(scaleF)+") \n"
+                    "group"+str(row*nCols+col)+".cx(-group"+str(row*nCols+col)+".rbox().cx  + group"+str(row*nCols+col)+".bbox().width/2 + dimOfDiv.width/"+str(nCols*2)+"*"+str(col*2+1)+") \n" 
+                    " group"+str(row*nCols+col)+".cy(-group"+str(row*nCols+col)+".rbox().cy + group"+str(row*nCols+col)+".bbox().height/2 + dimOfDiv.height/"+str(2*nRows)+"*"+str(row*2+1)+") </script>")
 
 @session_manager.sessionAuth
 def main():
@@ -96,11 +93,10 @@ def main():
     #table2 = Table(12)
     #table2.drawOnCanvas('canvas1')
     tables = []
-    for x in range(17):
-        tables.append(Table(8))
+    for x in range(2):
+        tables.append(Table((x+1)*5))
         tables[x].drawOnCanvas('canvas1')
 
     Table.putTablesOnDiv('canvas_container')
->>>>>>> origin
 
 main()
