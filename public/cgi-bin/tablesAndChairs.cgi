@@ -18,7 +18,6 @@ class Table:
             self.numOfChairs = numOfChairs
             self.tableNumber = Table.tableNumber
             Table.tableNumber += 1
-            print("<script> console.log("+str(self.tableNumber)+") </script>")
         except TypeError:
             print('<script> alert("%r is not a valid number for number of chairs") </script>' %numOfChairs)
 
@@ -93,8 +92,8 @@ def main():
     #table2 = Table(12)
     #table2.drawOnCanvas('canvas1')
     tables = []
-    for x in range(2):
-        tables.append(Table((x+1)*5))
+    for x in range(1):
+        tables.append(Table(2))
         tables[x].drawOnCanvas('canvas1')
 
     Table.putTablesOnDiv('canvas_container')
