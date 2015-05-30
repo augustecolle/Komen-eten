@@ -1,22 +1,32 @@
 
 <html>
 <head>
+<link rel="stylesheet" href="style.css">
 <title>This is a login test page </title>
 </head>
 <body>
 
-<!-- sign in form -->
-<form action="cgi-bin/signin.cgi" method="POST">
-Username: <input type="text" name="username" required><br>
-Password: <input type="text" name="password" required><br>
-<input type="submit" value="signin" name="signin">
-</form>
+<div id="inner">
+	<!-- sign in form -->
+	<div class="form" id="signin_form">
+		<form action="cgi-bin/signin.cgi" method="POST">
+		<label for="username">Username:</label><input type="text"        name="username" required><br>
+		<label for="password">Password:</label><input type="password"    name="password" required><br>
+		<div class="button_wrapper"><button type="submit" value="signin" name="signin">Sign In</button></div>
+		</form>
+	</div>
 
-<!-- sign up form -->
-<form action="cgi-bin/signup.cgi" method="POST">
-Username: <input type="text" name="username" required><br>
-Password: <input type="text" name="password" required><br>
-Email   : <input type="email"name="email"    required><br>
-<input type="submit" value="signup" name="signup">
+	<!-- sign up form -->
+	<div class="form" id="signup_form">
+		<form action="cgi-bin/signup.cgi" method="POST">
+		<label for="username">Username:</label> <input type="text"     name="username" required><br>
+		<label for="password">Password:</label> <input type="password" name="password" required><br>
+		<label for="email"   >Email   :</label> <input type="email"    name="email"    required><br>
+		<div class="button_wrapper"><button type="submit" value="signup" name="signup">Sign Up</button></div>
+		</form>
+	</div>
+
+</div>
+
 </body>
 </html>

@@ -34,15 +34,18 @@ if (db.user_exists(username) and db.check_password(username,password) ):
 	cookie["username"]   = username
 	cookie["session_id"] = session_id
 	bodystring = "Welcome {:s}, you succesfully logged in ".format(username)		
+	headstring = "<meta HTTP-EQUIV=\"REFRESH\" content=\"3; url=../index.html\">"
+	print(cookie) # important that this comes before Content-Type:....
 else:
-	bodystring = "Invalid username/password<br>"
-	bodystring+= " user exists ? "+str(db.user_exists(username))+"<br>"
-	bodystring+= " check passwd? "+str(db.check_password(username,password))+"<br><br>"
+	headstring = "<meta HTTP-EQUIV=\"REFRESH\" content=\"3; url=../index.html\">"
+	bodystring = "Invalid username or password<br>\n"
+	bodystring+= " user exists ? "+str(db.user_exists(username))+"<br>\n"
+	bodystring+= " check passwd? "+str(db.check_password(username,password))+"<br><br>\n"
 
-print(cookie) # important that this comes before Content-Type:....
-print("Content-Type: text/html\n\n")
+print("Content-type: text/html\n\n")
 print("<html>")
 print("<head>")
+print(headstring)
 print("<title>This is the title</title>")
 print("Your username was {:}<br>".format(form['username'].value))
 print("Your password was {:}<br>".format(form['password'].value))
