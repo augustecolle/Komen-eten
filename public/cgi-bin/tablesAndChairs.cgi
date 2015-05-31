@@ -38,7 +38,15 @@ class Table:
                 " chair"+str(self.tableNumber)+str(chairs)+".canvas.cx(dimOfDOM.width - xcoord - radius - 110) \n"
                 " chair"+str(self.tableNumber)+str(chairs)+".canvas.cy(ycoord) \n"
                 " chair"+str(self.tableNumber)+str(chairs)+".canvas.transform({rotation:"+str(angle*chairs*180/math.pi)+", cx : xcoord, cy : ycoord}) \n"
-                " group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) </script>")
+                " group"+str(self.tableNumber)+".add(chair"+str(self.tableNumber)+str(chairs)+".canvas) \n"
+                "animatedChair"+str(self.tableNumber)+str(chairs)+" = chair"+str(self.tableNumber)+str(chairs)+".canvas.animate(0,'=',0)\n"
+                #"chair"+str(self.tableNumber)+str(chairs)+".canvas.pause() \n"
+                #"chair"+str(self.tableNumber)+str(chairs)+".canvas.mouseover(function() { this.pause() }) \n"
+                #"chair"+str(self.tableNumber)+str(chairs)+".canvas.mouseout(function() { this.pause() }) \n"
+                "document.getElementById(chair"+str(self.tableNumber)+str(chairs)+".canvas.node.id).onmouseover = function(event) { \n"
+"  animatedChair"+str(self.tableNumber)+str(chairs)+".animate(1000,'<',0).dx(-50).after(function(){this.animate().dx(50) }) \n"
+"} \n"
+ "</script> ")
         else:
             scaleFactor = 15.0/self.numOfChairs
             #scale table
@@ -84,6 +92,7 @@ def main():
     print('<script src="../table_and_chairs/svg.js" type="text/javascript"></script>')
     print('<script src="../table_and_chairs/svg.parser.js" type="text/javascript"></script>')
     print('<script src="../table_and_chairs/svg.import.js" type="text/javascript"></script>')
+    print('<script src="../table_and_chairs/sugar.min.js" type="text/javascript"></script>')
     print('<script src="../table_and_chairs/tryOutAuguste.js" type="text/javascript"></script>')
      
     print("<script> var canvas1 = newCanvas('canvas_container', '100%','100%') </script>")
@@ -92,8 +101,8 @@ def main():
     #table2 = Table(12)
     #table2.drawOnCanvas('canvas1')
     tables = []
-    for x in range(1):
-        tables.append(Table(2))
+    for x in range(5):
+        tables.append(Table(6))
         tables[x].drawOnCanvas('canvas1')
 
     Table.putTablesOnDiv('canvas_container')

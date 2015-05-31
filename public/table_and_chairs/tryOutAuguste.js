@@ -74,6 +74,9 @@ function centerOnDiv(divId, SVG){
     SVG.center(getDimOfDOM(divId).width/2, getDimOfDOM(divId).height/2)
     }
 
+//---------------------animating functions----------------------
+
+
 
 
 
