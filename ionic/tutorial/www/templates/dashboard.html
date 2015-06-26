@@ -1,0 +1,19 @@
+<ion-view view-title="Komen eten" name="dashboard-view">
+  <ion-nav-buttons side="right">
+    <button class="button icon-left ion-log-out button-stable" ng-click="logout()">Logout</button>
+  </ion-nav-buttons>
+ 
+  <ion-content class="padding">
+    <div class="row"><div class="col text-center">
+      <h3 class="title">ingelogd als {{username}}</h3>
+      Momenteel zijn er {{table.numTables()}} tafels
+      <br><br><br>
+    </div></div>
+  </ion-content>
+  <ion-content class="padding" style="padding-top:90px">
+      <ion-scroll zooming="true" direction="xy" min-zoom=0.1 has-bouncing="true" style="border:2px solid black">
+        <div id="container" ng-controller="TableCtrl" style="width: 5000px; height: 5000px;"></div>
+      </ion-scroll> 
+  </ion-content>
+</ion-view>
+

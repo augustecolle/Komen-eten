@@ -1,0 +1,18 @@
+<ion-view view-title="Public" name="dashboard-view">
+  <ion-content class="padding">
+      This is open for everyone!
+
+      <button class="button button-full button-positive" ng-click="performValidRequest()">
+        Make Valid Request
+      </button>
+      <button class="button button-full button-energized" ng-click="performUnauthorizedRequest()">
+        Make Request for unauthorized resource
+      </button>
+      <button class="button button-full button-assertive" ng-click="performInvalidRequest()">
+        Make Request without valid token
+      </button>
+      <br><br>
+      {{response}}
+
+  </ion-content>
+</ion-view>
